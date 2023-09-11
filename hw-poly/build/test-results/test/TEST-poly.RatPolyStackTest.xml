@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="poly.RatPolyStackTest" tests="19" skipped="0" failures="0" errors="0" timestamp="2023-01-26T18:07:23" hostname="LAPTOP-814US0M4" time="0.064">
+  <properties/>
+  <testcase name="testSwapWithMultElems" classname="poly.RatPolyStackTest" time="0.018"/>
+  <testcase name="testSubTwoElems" classname="poly.RatPolyStackTest" time="0.001"/>
+  <testcase name="testPop" classname="poly.RatPolyStackTest" time="0.002"/>
+  <testcase name="testClear" classname="poly.RatPolyStackTest" time="0.001"/>
+  <testcase name="testAddMultiElems" classname="poly.RatPolyStackTest" time="0.002"/>
+  <testcase name="testCtor" classname="poly.RatPolyStackTest" time="0.001"/>
+  <testcase name="testPush" classname="poly.RatPolyStackTest" time="0.003"/>
+  <testcase name="testSwapWitSameElems" classname="poly.RatPolyStackTest" time="0.002"/>
+  <testcase name="testSwapWithTwoElems" classname="poly.RatPolyStackTest" time="0.001"/>
+  <testcase name="testSubMultiElems" classname="poly.RatPolyStackTest" time="0.004"/>
+  <testcase name="testMulTwoElems" classname="poly.RatPolyStackTest" time="0.002"/>
+  <testcase name="testDivTwoElems" classname="poly.RatPolyStackTest" time="0.001"/>
+  <testcase name="testAddTwoElems" classname="poly.RatPolyStackTest" time="0.001"/>
+  <testcase name="testMulMultiElems" classname="poly.RatPolyStackTest" time="0.002"/>
+  <testcase name="testDivMultiElems" classname="poly.RatPolyStackTest" time="0.001"/>
+  <testcase name="testDupWithMultVal" classname="poly.RatPolyStackTest" time="0.004"/>
+  <testcase name="testDupWithOneVal" classname="poly.RatPolyStackTest" time="0.002"/>
+  <testcase name="testPushCheckForSharingTwixtStacks" classname="poly.RatPolyStackTest" time="0.003"/>
+  <testcase name="testDupWithTwoVal" classname="poly.RatPolyStackTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

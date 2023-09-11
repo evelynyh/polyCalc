@@ -1,0 +1,145 @@
+## CSE 331 hw-poly Questions
+## Part 0
+###########################################################################
+
+1. Multiplication Pseudocode
+
+given the equation (q*p)=r...
+r = empty structure
+{Inv: r = q0*(p)+ ... + qi(p) where qi is the ith term in q}
+for each term in q:
+    //multiply term by all of p...
+    {Inv: r = q0*(p0 + p1 + ... + pi)+...+qi * (p0 + p1 + ... + pi) where pi is the ith term in p}
+    for each term in p:
+        c = constant pi, qi values multiplied together
+        ex = exponent pi, qi values added together
+        r += term with a constant c and exponent ex
+{q0*(p)+ ... + qi(p) and all q values have been accounted for=>post:(q*p)=r}
+
+
+2. Division Pseudocode
+quotient = empty structure
+{Inv: quotient = hdd0/(hdiv0)+ ... + hhdi(hdivi) where hdd = highest degree dividend,
+hdiv = highest degree divisor and i is the ith term of each}
+while (hdd >= hdiv):
+    r = hddi exponential value - hdivi exponential value
+    c = hddi constant / hdivi constant
+    quotient += term with exponent r and constant c
+    dividend = dividend + (term with -1*c constant and r exponent)*(divisor) //multiplication between 2 terms specified in part 0.1
+remainder = dividend/divisor
+{(quotient = hdd0/(hdiv0)+ ... + hhdi(hdivi)) and hdd < hdiv =>post:(dividend/divisor)=quotient}
+
+
+
+3. Divison Example: (x3+x-1) / (x+1) = x2-x+2
+round 1:
+    r = 3 - 1 = 2
+    c = 1
+    quotient += x^2
+    dividend = (x3+x-1)-x^2((x+1)) = (x3+x-1)-(x^3+x^2) = -x^2+x-1
+
+round 2:
+    r = 2 - 1 = 1
+    c = -1
+    quotient += -x
+    dividend = (-x^2+x-1)+x((x+1)) = (-x^2+x-1)+x^2+x = 2x-1
+
+round 3:
+    r = 1 - 1 = 0
+    c = 2
+    quotient += 2
+    dividend = (2x-1)-2((x+1)) = (2x-1)-2x-2 = -3
+
+remainder = -3/x+1
+quotient = x^2-x+2
+
+
+## Part 1
+###########################################################################
+
+1. Weakened Rep Invariant
+RatNum: Because we don't need to reduce numer and denom, we don't need to find gcd here.
+Advantage: dont need to spend time reducing numer and denom
+
+checkRep: because we changed the invariant, how we check this invariant needs to change.
+Advantage: dont need to check gcd.
+
+equals: because the numer and denom are not reduced, we need to somewhat reduce in order to compare with another RatNum
+Disadvantage: we must reduce numer and denom by gcd in order to compare with another RatNum or else something like 1/2
+and 2/4 would return unequal
+
+toString: because the numer and denom are not reduced (and we need to print the reduced fraction) we need to reduce within this method
+Disadvantage: string is required to be a reduced RatNum, so we must find gcd and divide numer and denom by this
+
+
+2. Alternate add, sub, mul, div
+given that RatNum is immutable, changing numer and denom by assigning them to different values
+(i.e. the values you want to return) means that RatNum is mutable which breaks the spec.
+
+
+3. Constructor checkReps
+because RatNum is immutable, RatNum only changes when constructed, so we only need to check if rep invariant
+holds once after construction. The check looks for whether RatNum is reduced and the denom is valid/not negative
+or 0, and these values only change within the constuctor and therefore should only need to be checked there.
+
+
+
+## Part 2
+###########################################################################
+
+1. Calls to checkRep in RatTerm
+just like in RatNum, only at the end of constructor as RatTerm is immutable. RatTerm only changes when
+constructed, so we only need to check if rep invariant holds once after construction. I couldn't change
+RatTerm if I tried because expt is a final int and coeff is immutable and final.
+
+
+2. Weakened Rep Invariant
+RatNum: Because we don't need to check for 0 exponents, we dont have a conditional if coeff is zero.
+Advantage: dont need to spend time checking if c is the RatNum zero
+
+checkRep: because we changed the invariant, how we check this invariant needs to change.
+Advantage: dont need to check if the exponent is 0
+
+toString: because the exponent can be anything (and toString cannot produce a term with a zero coefficient (except 0))
+we need to check if our value is equal to the RatTerm 0 (different from isZero())
+Disadvantage: must check if exponent is 0 when the coefficient is 0 before doing anything in toString
+
+
+3. Alternate Rep Invariant
+checkRep: because we changed the invariant, how we check this invariant needs to change.
+Disadvantage: we need to check if the exponent is 0 when the coeff is NaN
+
+isNaN: because our definition of NaN has changed, we must check if our ratTerm is equal to NaN
+Disadvantage: must check if exponents are also 0
+Advantage: isNaN() is used within other methods to check NaN,
+so this is the only place we need to check if NaN is correct
+
+
+4. Preferred Invariants //ignore
+My preferred invariants are the ones already implemented in the given check rep:
+RatTerms with zero coefficients must have zero exponents. not only does it not make anything
+ significantly harder to check whether expt is 0 when coeff is 0 once after constructing,
+ we wont need to check every time we want to use the toString method.
+
+
+## Part 3
+###########################################################################
+
+1. Calls to checkRep in RatPoly
+We need to check at the end of the constructor to make sure things are constructed right.
+Then we check at the beginning and end of methods because RatPoly values can change (RatPoly uses a list), so
+we need to make sure that these changes don't break Rep Inv. A Rep Inv. should be true at the beginning of the
+method and at the end, so we checkRep at the beginning before other method code and at the end before our returns.
+
+
+2. Alternate Representation
+One advantage is that this implementation allows 0 polynomials, weakening the rep invariant, and
+making it easier to implement as you wont have to constantly remove 0 elements from the list.
+Unfortunately, as we allow 0 elements in the list, we will have to compensate for that in other methods
+(such as toString) so that our polynomials are as reduced as possible. Our implementation (1 list) is also
+better because 2 lists keep track of terms using index and if a term is added or removed incorrectly,
+the term indexes may shift around, making bugs more destructive and harder to fix.
+
+
+
+
